@@ -57,22 +57,23 @@ public class Solution {
     }
 }
 
-","## Requirements: 
+","Container With Most Water
 
-**INPUT CONTENT:**
-Container With Most Water You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]). Find two lines that together with the x-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store. Notice that you may not slant the container. 
+You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]). Find two lines that together with the x-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store. Notice that you may not slant the container.
 
-**Example 1:** Input: height = [1,8,6,2,5,4,8,3,7] Output: 49 Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+Example 1:
+Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
 
-**Example 2:** Input: height = [1,1] Output: 1 
+Example 2:
+Input: height = [1,1]
+Output: 1
 
-**Constraints:** n == height.length 2 &lt;= n &lt; 105 0 &lt;= height[i] &lt; 104 
-
-**OUTPUT FORMAT:**
-Problem Description: [clear description of the problem]
-Examples: [formatted examples without markdown]
-Constraints: [list of constraints]
-Requirements: [what the solution must accomplish]"
+Constraints:
+- n == height.length
+- 2 <= n <= 105
+- 0 <= height[i] <= 104"
 14-longest-common-prefix,"<h2><a href=""https://leetcode.com/problems/longest-common-prefix"">Longest Common Prefix</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>Write a function to find the longest common prefix string amongst an array of strings.</p>
 
 <p>If there is no common prefix, return an empty string <code>&quot;&quot;</code>.</p>
@@ -118,21 +119,21 @@ class Solution {
 
 }
 
-","## Requirements: 
+","Longest Common Prefix
 
-1. PRESERVE all technical content: problem description, examples, constraints, and requirements
-2. REMOVE all markdown formatting: headers (#), bold (**), italics (*), code blocks (```), inline code (`), links, and HTML tags
-3. MAINTAIN the original structure: keep examples and constraints clearly separated
-4. USE clean formatting: use plain text with clear section separators
-5. KEEP all test cases and examples intact but remove markdown syntax around them
+Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string """".
 
-## INPUT CONTENT: 
-Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string &quot;&quot;.  
-Example 1: Input: strs = [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;] Output: &quot;fl&quot; Example 2: Input: strs = [&quot;dog&quot;,&quot;racecar&quot;,&quot;car&quot;] Output: &quot;&quot; Explanation: There is no common prefix among the input strings.  
-Constraints: 1 &lt;= strs.length &lt;= 200 0 &lt;= strs[i].length &lt;= 200 strs[i] consists of only lowercase English letters if it is non-empty.
+Example 1:
+Input: strs = [""flower"", ""flow"", ""flight""]
+Output: ""fl""
 
-## OUTPUT FORMAT: 
-Problem Description: [clear description of the problem]
-Examples: [formatted examples without markdown]
-Constraints: [list of constraints]
-Requirements: [what the solution must accomplish]"
+Example 2:
+Input: strs = [""dog"", ""racecar"", ""car""]
+Output: """"
+
+Explanation: There is no common prefix among the input strings.
+
+Constraints:
+1 <= strs.length <= 200
+0 <= strs[i].length <= 200
+strs[i] consists of only lowercase English letters if it is non-empty."

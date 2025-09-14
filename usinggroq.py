@@ -4,9 +4,17 @@ import re
 import requests
 import json
 from pathlib import Path
+from groq import Groq
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 def clean_text_markdown(text):
     """Basic cleaning to remove markdown symbols and HTML tags"""
+    if not text:
+        return ""
+    
     # Remove HTML tags
     text = re.sub(r'<[^>]+>', '', text)
     # Remove markdown headers
@@ -24,43 +32,43 @@ def clean_text_markdown(text):
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
-def call_ollama_gemma(prompt, model="gemma2:2b", host="http://localhost:11434"):
-    """Call Ollama API with Gemma2 model to refine the problem statement"""
+def call_groq_api(prompt, model="llama-3.1-8b-instant"):
+    """Call Groq API with specified model to refine the problem statement"""
     try:
-        # Prepare the payload
-        payload = {
-            "model": model,
-            "prompt": prompt,
-            "stream": False,
-            "options": {
-                "temperature": 0.1,
-                "top_p": 0.9
-            }
-        }
+        # Initialize Groq client
+        api_key = os.getenv('GROQ_API_KEY')
+        if not api_key:
+            print("Error: GROQ_API_KEY not found in environment variables")
+            return None
+        
+        client = Groq(api_key=api_key)
         
         # Make the API call
-        response = requests.post(
-            f"{host}/api/generate",
-            json=payload,
-            timeout=120  # 2 minute timeout
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a helpful assistant that processes LeetCode problem statements. Extract and clean the problem description while preserving all technical content."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            model=model,
+            temperature=0.1,
+            max_tokens=2000,
+            top_p=0.9
         )
         
-        if response.status_code == 200:
-            result = response.json()
-            return result.get('response', '').strip()
-        else:
-            print(f"Ollama API error: {response.status_code} - {response.text}")
-            return None
+        return chat_completion.choices[0].message.content.strip()
             
-    except requests.exceptions.RequestException as e:
-        print(f"Error connecting to Ollama: {e}")
-        return None
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        print(f"Error calling Groq API: {e}")
         return None
 
 def refine_problem_statement(readme_content):
-    """Refine the problem statement using Ollama Gemma2 model"""
+    """Refine the problem statement using Groq API"""
     if not readme_content or readme_content.strip() == "":
         return "No README content available"
     
@@ -71,42 +79,28 @@ def refine_problem_statement(readme_content):
         return cleaned_content
     
     # Create prompt for the model
-    # prompt = f""" This is a leatcode problem. 
-    # Please analyze this README content and extract the core problem statement in clear, concise text. 
-    # Also do include the examples given in clear format with any constraints. 
-    # Just remove the HTML tags and Markdown characters. Remove any markdown formatting like `` or ** or others.
-
-    # README Content:
-    # {cleaned_content[:2000]}  # Limit content to avoid token limits
-
-    # Please provide only the refined content without markdown formatting removing all special charcaters denoting markdown"""
-
     prompt = f"""Analyze this LeetCode problem description and extract the complete problem statement in clean, plain text format.
 
-    REQUIREMENTS:
-    1. PRESERVE all technical content: problem description, examples, constraints, and requirements
-    2. REMOVE all markdown formatting: headers (#), bold (**), italics (*), code blocks (```), inline code (`), links, and HTML tags
-    3. MAINTAIN the original structure: keep examples and constraints clearly separated
-    4. USE clean formatting: use plain text with clear section separators
-    5. KEEP all test cases and examples intact but remove markdown syntax around them
+REQUIREMENTS:
+1. PRESERVE all technical content exactly: problem description, examples, constraints, and requirements
+2. CONVERT all HTML entities to proper characters: &quot; to ", &lt; to <, &gt; to >, etc.
+3. REMOVE all markdown formatting: headers (#), bold (**), italics (*), code blocks (```), inline code (`), links, and HTML tags
+4. MAINTAIN the original structure: keep examples and constraints clearly separated
+5. KEEP all test cases, examples, and constraints intact but remove markdown syntax
+6. PRESERVE exact wording and technical details - do not paraphrase or summarize
+7. OUTPUT in clean, readable plain text with proper spacing
 
-    INPUT CONTENT:
-    {cleaned_content[:2000]}
+INPUT CONTENT:
+{cleaned_content[:3000]}
 
-    OUTPUT FORMAT:
-    Problem Description: [clear description of the problem]
-    Examples: [formatted examples without markdown]
-    Constraints: [list of constraints]
-    Requirements: [what the solution must accomplish]
-
-    Provide only the cleaned problem statement without any additional commentary or analysis:"""
+Provide the complete problem statement with examples and constraints in clean plain text format:"""
     
-    # Call Ollama
-    refined_text = call_ollama_gemma(prompt)
+    # Call Groq API
+    refined_text = call_groq_api(prompt)
     
     if refined_text is None:
-        # Fallback to basic cleaning if Ollama fails
-        return cleaned_content[:500]  # Limit length
+        # Fallback to basic cleaning if API fails
+        return cleaned_content[:1000]
     
     return refined_text
 
@@ -135,7 +129,7 @@ def process_csv_file(input_csv, output_csv):
         return
     
     # Process each row
-    print("Processing README content with Ollama Gemma2 model...")
+    print("Processing README content with Groq API...")
     print("This may take some time depending on the number of entries...")
     
     for i, row in enumerate(rows, 1):
@@ -171,13 +165,21 @@ def process_csv_file(input_csv, output_csv):
 
 def main():
     """Main function to run the script"""
-    print("Ollama Gemma2 README Processor")
-    print("=" * 50)
+    print("Groq API README Processor")
+    print("=" * 40)
     print("Prerequisites:")
-    print("1. Ollama must be installed and running")
-    print("2. Gemma2:2b model must be downloaded: run 'ollama pull gemma2:2b'")
+    print("1. GROQ_API_KEY must be set in .env file")
+    print("2. Install required packages: pip install python-dotenv groq")
     print("3. Input CSV file should have 'readme_content' column")
     print()
+    
+    # Check if API key is available
+    api_key = os.getenv('GROQ_API_KEY')
+    if not api_key:
+        print("Error: GROQ_API_KEY not found in environment variables")
+        print("Please create a .env file with: GROQ_API_KEY=your_api_key_here")
+        print("Get your API key from: https://console.groq.com/keys")
+        return
     
     # Get input file path
     input_csv = input("Enter the path to input CSV file: ").strip()
@@ -190,19 +192,6 @@ def main():
     output_csv = input("Enter output CSV file name (default: refined_java_readme_data.csv): ").strip()
     if not output_csv:
         output_csv = "refined_java_readme_data.csv"
-    
-    # Check if Ollama is running
-    try:
-        response = requests.get("http://localhost:11434/api/tags", timeout=5)
-        if response.status_code != 200:
-            print("Warning: Ollama may not be running on localhost:11434")
-            print("Please ensure Ollama is installed and running")
-    except:
-        print("Warning: Cannot connect to Ollama. Please ensure it's running on localhost:11434")
-        print("You can install Ollama from: https://ollama.com/")
-        continue_anyway = input("Continue anyway? (y/n): ").strip().lower()
-        if continue_anyway != 'y':
-            return
     
     # Process the CSV file
     process_csv_file(input_csv, output_csv)
