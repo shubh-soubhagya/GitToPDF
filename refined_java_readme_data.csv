@@ -1,0 +1,138 @@
+directory_name,readme_content,java_code,refined_problem
+11-container-with-most-water,"<h2><a href=""https://leetcode.com/problems/container-with-most-water"">Container With Most Water</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>You are given an integer array <code>height</code> of length <code>n</code>. There are <code>n</code> vertical lines drawn such that the two endpoints of the <code>i<sup>th</sup></code> line are <code>(i, 0)</code> and <code>(i, height[i])</code>.</p>
+
+<p>Find two lines that together with the x-axis form a container, such that the container contains the most water.</p>
+
+<p>Return <em>the maximum amount of water a container can store</em>.</p>
+
+<p><strong>Notice</strong> that you may not slant the container.</p>
+
+<p>&nbsp;</p>
+<p><strong class=""example"">Example 1:</strong></p>
+<img alt="""" src=""https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg"" style=""width: 600px; height: 287px;"" />
+<pre>
+<strong>Input:</strong> height = [1,8,6,2,5,4,8,3,7]
+<strong>Output:</strong> 49
+<strong>Explanation:</strong> The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+</pre>
+
+<p><strong class=""example"">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> height = [1,1]
+<strong>Output:</strong> 1
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>n == height.length</code></li>
+	<li><code>2 &lt;= n &lt;= 10<sup>5</sup></code></li>
+	<li><code>0 &lt;= height[i] &lt;= 10<sup>4</sup></code></li>
+</ul>
+","--- File: container-with-most-water.java ---
+public class Solution {
+    public int maxArea(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int maxArea = 0;
+
+        while (left < right) {
+            int width = right - left;
+            int minHeight = Math.min(height[left], height[right]);
+            int area = width * minHeight;
+
+            maxArea = Math.max(maxArea, area);
+
+            // Move the pointer pointing to the shorter line
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        return maxArea;
+    }
+}
+
+","## Requirements: 
+
+**INPUT CONTENT:**
+Container With Most Water You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]). Find two lines that together with the x-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store. Notice that you may not slant the container. 
+
+**Example 1:** Input: height = [1,8,6,2,5,4,8,3,7] Output: 49 Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+
+**Example 2:** Input: height = [1,1] Output: 1 
+
+**Constraints:** n == height.length 2 &lt;= n &lt; 105 0 &lt;= height[i] &lt; 104 
+
+**OUTPUT FORMAT:**
+Problem Description: [clear description of the problem]
+Examples: [formatted examples without markdown]
+Constraints: [list of constraints]
+Requirements: [what the solution must accomplish]"
+14-longest-common-prefix,"<h2><a href=""https://leetcode.com/problems/longest-common-prefix"">Longest Common Prefix</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>Write a function to find the longest common prefix string amongst an array of strings.</p>
+
+<p>If there is no common prefix, return an empty string <code>&quot;&quot;</code>.</p>
+
+<p>&nbsp;</p>
+<p><strong class=""example"">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> strs = [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;]
+<strong>Output:</strong> &quot;fl&quot;
+</pre>
+
+<p><strong class=""example"">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> strs = [&quot;dog&quot;,&quot;racecar&quot;,&quot;car&quot;]
+<strong>Output:</strong> &quot;&quot;
+<strong>Explanation:</strong> There is no common prefix among the input strings.
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>1 &lt;= strs.length &lt;= 200</code></li>
+	<li><code>0 &lt;= strs[i].length &lt;= 200</code></li>
+	<li><code>strs[i]</code> consists of only lowercase English letters if it is non-empty.</li>
+</ul>
+","--- File: longest-common-prefix.java ---
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) return """";
+        String cm = strs[0];
+        for (int i = 1; i < strs.length && !cm.isEmpty(); i++) {
+            String s = strs[i];
+            int min = Math.min(s.length(), cm.length());
+            int j = 0;
+            while (j < min && s.charAt(j) == cm.charAt(j)) j++;
+            cm = cm.substring(0, j);
+        }
+        return cm;
+        }
+
+}
+
+","## Requirements: 
+
+1. PRESERVE all technical content: problem description, examples, constraints, and requirements
+2. REMOVE all markdown formatting: headers (#), bold (**), italics (*), code blocks (```), inline code (`), links, and HTML tags
+3. MAINTAIN the original structure: keep examples and constraints clearly separated
+4. USE clean formatting: use plain text with clear section separators
+5. KEEP all test cases and examples intact but remove markdown syntax around them
+
+## INPUT CONTENT: 
+Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string &quot;&quot;.  
+Example 1: Input: strs = [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;] Output: &quot;fl&quot; Example 2: Input: strs = [&quot;dog&quot;,&quot;racecar&quot;,&quot;car&quot;] Output: &quot;&quot; Explanation: There is no common prefix among the input strings.  
+Constraints: 1 &lt;= strs.length &lt;= 200 0 &lt;= strs[i].length &lt;= 200 strs[i] consists of only lowercase English letters if it is non-empty.
+
+## OUTPUT FORMAT: 
+Problem Description: [clear description of the problem]
+Examples: [formatted examples without markdown]
+Constraints: [list of constraints]
+Requirements: [what the solution must accomplish]"
