@@ -104,8 +104,8 @@ Provide the complete problem statement with examples and constraints in clean pl
     
     return refined_text
 
-def process_csv_file(input_csv, output_csv):
-    """Process the CSV file and add refined_problem column"""
+def process_csv_file(input_csv, output_csv, start_row, end_row):
+    """Process the CSV file and add refined_problem column for specified row range"""
     if not os.path.exists(input_csv):
         print(f"Error: Input file {input_csv} not found")
         return
@@ -116,10 +116,18 @@ def process_csv_file(input_csv, output_csv):
     try:
         with open(input_csv, 'r', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
-            fieldnames = reader.fieldnames + ['refined_problem'] if reader.fieldnames else []
+            fieldnames = reader.fieldnames
             
-            for row in reader:
+            # Check if refined_problem column exists, if not add it
+            if 'refined_problem' not in fieldnames:
+                fieldnames = list(fieldnames) + ['refined_problem']
+            
+            for i, row in enumerate(reader, 1):
+                # Initialize refined_problem if it doesn't exist
+                if 'refined_problem' not in row:
+                    row['refined_problem'] = ''
                 rows.append(row)
+                
     except Exception as e:
         print(f"Error reading CSV file: {e}")
         return
@@ -128,17 +136,36 @@ def process_csv_file(input_csv, output_csv):
         print("No data found in CSV file")
         return
     
-    # Process each row
-    print("Processing README content with Groq API...")
+    # Validate row range
+    if start_row < 1:
+        start_row = 1
+    if end_row > len(rows):
+        end_row = len(rows)
+    if start_row > end_row:
+        print("Error: start_row cannot be greater than end_row")
+        return
+    
+    print(f"Processing rows {start_row} to {end_row} out of {len(rows)} total rows...")
     print("This may take some time depending on the number of entries...")
     
-    for i, row in enumerate(rows, 1):
+    # Process only the specified row range
+    processed_count = 0
+    for i in range(start_row - 1, end_row):  # Convert to 0-based index
+        row = rows[i]
         readme_content = row.get('readme_content', '')
-        print(f"Processing entry {i}/{len(rows)}...")
+        current_row_num = i + 1
         
-        # Refine the problem statement
-        refined_problem = refine_problem_statement(readme_content)
-        row['refined_problem'] = refined_problem
+        print(f"Processing row {current_row_num}/{len(rows)}...")
+        
+        # Only process if refined_problem is empty or we want to reprocess
+        if not row.get('refined_problem') or row['refined_problem'].strip() == "":
+            # Refine the problem statement
+            refined_problem = refine_problem_statement(readme_content)
+            row['refined_problem'] = refined_problem
+            processed_count += 1
+        else:
+            print(f"✓ Row {current_row_num} already has refined data, skipping...")
+            continue
         
         # Print progress
         print(f"✓ Processed directory: {row.get('directory_name', 'Unknown')}")
@@ -158,10 +185,30 @@ def process_csv_file(input_csv, output_csv):
                 writer.writerow(row)
         
         print(f"Successfully processed and saved to {output_csv}")
-        print(f"Total entries processed: {len(rows)}")
+        print(f"Total rows in file: {len(rows)}")
+        print(f"Rows processed this run: {processed_count}")
+        print(f"Rows with refined data: {sum(1 for row in rows if row.get('refined_problem') and row['refined_problem'].strip())}")
         
     except Exception as e:
         print(f"Error writing to CSV file: {e}")
+
+def get_integer_input(prompt, default_value, min_value=1, max_value=None):
+    """Get integer input with validation"""
+    while True:
+        try:
+            value = input(prompt).strip()
+            if not value:
+                return default_value
+            value = int(value)
+            if value < min_value:
+                print(f"Value must be at least {min_value}")
+                continue
+            if max_value is not None and value > max_value:
+                print(f"Value must be at most {max_value}")
+                continue
+            return value
+        except ValueError:
+            print("Please enter a valid integer")
 
 def main():
     """Main function to run the script"""
@@ -188,13 +235,41 @@ def main():
         print("No input file provided. Exiting.")
         return
     
-    # Set output file path
-    output_csv = input("Enter output CSV file name (default: refined_java_readme_data.csv): ").strip()
+    if not os.path.exists(input_csv):
+        print(f"Error: File {input_csv} does not exist")
+        return
+    
+    # Count total rows to set reasonable defaults
+    try:
+        with open(input_csv, 'r', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile)
+            total_rows = sum(1 for _ in reader)
+    except:
+        total_rows = 0
+    
+    # Get row range
+    print(f"\nTotal rows in file: {total_rows}")
+    start_row = get_integer_input(
+        f"Enter start row number (1-{total_rows}, default 1): ",
+        default_value=1,
+        min_value=1,
+        max_value=total_rows
+    )
+    
+    end_row = get_integer_input(
+        f"Enter end row number ({start_row}-{total_rows}, default {total_rows}): ",
+        default_value=total_rows,
+        min_value=start_row,
+        max_value=total_rows
+    )
+    
+    # Set output file path (same as input by default)
+    output_csv = input("Enter output CSV file name (default: same as input): ").strip()
     if not output_csv:
-        output_csv = "refined_java_readme_data.csv"
+        output_csv = input_csv
     
     # Process the CSV file
-    process_csv_file(input_csv, output_csv)
+    process_csv_file(input_csv, output_csv, start_row, end_row)
 
 if __name__ == "__main__":
     main()
