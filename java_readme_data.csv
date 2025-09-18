@@ -810,7 +810,23 @@ class Solution {
 
     }
 }
-",
+","Minimum Difference Between Highest and Lowest of K Scores
+
+You are given a 0-indexed integer array nums, where nums[i] represents the score of the ith student. You are also given an integer k. Pick the scores of any k students from the array so that the difference between the highest and the lowest of the k scores is minimized. Return the minimum possible difference.
+
+Example 1:
+Input: nums = [90], k = 1
+Output: 0
+Explanation: There is one way to pick score(s) of one student: [90]. The difference between the highest and lowest score is 90 - 90 = 0. The minimum possible difference is 0.
+
+Example 2:
+Input: nums = [9,4,1,7], k = 2
+Output: 2
+Explanation: There are six ways to pick score(s) of two students: [9,4,1,7]. The difference between the highest and lowest score is 9 - 4 = 5. [9,4,1,7]. The difference between the highest and lowest score is 9 - 1 = 8. [9,4,1,7]. The difference between the highest and lowest score is 9 - 7 = 2. [9,4,1,7]. The difference between the highest and lowest score is 4 - 1 = 3. [9,4,1,7]. The difference between the highest and lowest score is 7 - 4 = 3. [9,4,1,7]. The difference between the highest and lowest score is 7 - 1 = 6. The minimum possible difference is 2.
+
+Constraints:
+1 <= k <= nums.length <= 1000
+0 <= nums[i] <= 10^5"
 217-contains-duplicate,"<h2><a href=""https://leetcode.com/problems/contains-duplicate"">Contains Duplicate</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>Given an integer array <code>nums</code>, return <code>true</code> if any value appears <strong>at least twice</strong> in the array, and return <code>false</code> if every element is distinct.</p>
 
 <p>&nbsp;</p>
@@ -865,7 +881,25 @@ class Solution {
         return false; 
     }
 }
-",
+","Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+Example 1:
+Input: nums = [1,2,3,1]
+Output: true
+Explanation: The element 1 occurs at the indices 0 and 3.
+
+Example 2:
+Input: nums = [1,2,3,4]
+Output: false
+Explanation: All elements are distinct.
+
+Example 3:
+Input: nums = [1,1,1,3,3,4,3,2,4,2]
+Output: true
+
+Constraints:
+1 <= nums.length <= 10^5
+-10^9 <= nums[i] <= 10^9"
 26-remove-duplicates-from-sorted-array,"<h2><a href=""https://leetcode.com/problems/remove-duplicates-from-sorted-array"">Remove Duplicates from Sorted Array</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>Given an integer array <code>nums</code> sorted in <strong>non-decreasing order</strong>, remove the duplicates <a href=""https://en.wikipedia.org/wiki/In-place_algorithm"" target=""_blank""><strong>in-place</strong></a> such that each unique element appears only <strong>once</strong>. The <strong>relative order</strong> of the elements should be kept the <strong>same</strong>. Then return <em>the number of unique elements in </em><code>nums</code>.</p>
 
 <p>Consider the number of unique elements of <code>nums</code> to be <code>k</code>, to get accepted, you need to do the following things:</p>
@@ -938,7 +972,26 @@ public class Solution {
     }
 }
 
-",
+","Remove Duplicates from Sorted Array
+
+Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums. Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things: Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums. Return k.
+
+Custom Judge: The judge will test your solution with the following code: int[] nums = [...]; // Input array int[] expectedNums = [...]; // The expected answer with correct length int k = removeDuplicates(nums); // Calls your implementation assert k == expectedNums.length; for (int i = 0; i < k; i++) { assert nums[i] == expectedNums[i]; }
+
+Example 1:
+Input: nums = [1,1,2]
+Output: 2, nums = [1,2,]
+Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively. It does not matter what you leave beyond the returned k (hence they are underscores).
+
+Example 2:
+Input: nums = [0,0,1,1,1,2,2,3,3,4]
+Output: 5, nums = [0,1,2,3,4,,,,,]
+Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively. It does not matter what you leave beyond the returned k (hence they are underscores).
+
+Constraints:
+1 <= nums.length <= 3 * 10^4
+-100 <= nums[i] <= 100
+nums is sorted in non-decreasing order."
 287-find-the-duplicate-number,"<h2><a href=""https://leetcode.com/problems/find-the-duplicate-number"">Find the Duplicate Number</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>Given an array of integers <code>nums</code> containing&nbsp;<code>n + 1</code> integers where each integer is in the range <code>[1, n]</code> inclusive.</p>
 
 <p>There is only <strong>one repeated number</strong> in <code>nums</code>, return <em>this&nbsp;repeated&nbsp;number</em>.</p>
@@ -1007,7 +1060,31 @@ class Solution {
     }
 }
 
-",
+","Find the Duplicate Number
+
+Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive. There is only one repeated number in nums, return this repeated number. You must solve the problem without modifying the array nums and using only constant extra space.
+
+Example 1:
+Input: nums = [1,3,4,2,2]
+Output: 2
+
+Example 2:
+Input: nums = [3,1,3,4,2]
+Output: 3
+
+Example 3:
+Input: nums = [3,3,3,3,3]
+Output: 3
+
+Constraints:
+1 <= n <= 10^5
+nums.length == n + 1
+1 <= nums[i] <= n
+All the integers in nums appear only once except for precisely one integer which appears two or more times.
+
+Follow up:
+How can we prove that at least one duplicate number must exist in nums?
+Can you solve the problem in linear runtime complexity?"
 289-game-of-life,"<h2><a href=""https://leetcode.com/problems/game-of-life"">Game of Life</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>According to <a href=""https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"" target=""_blank"">Wikipedia&#39;s article</a>: &quot;The <b>Game of Life</b>, also known simply as <b>Life</b>, is a cellular automaton devised by the British mathematician John Horton Conway in 1970.&quot;</p>
 
 <p>The board is made up of an <code>m x n</code> grid of cells, where each cell has an initial state: <b>live</b> (represented by a <code>1</code>) or <b>dead</b> (represented by a <code>0</code>). Each cell interacts with its <a href=""https://en.wikipedia.org/wiki/Moore_neighborhood"" target=""_blank"">eight neighbors</a> (horizontal, vertical, diagonal) using the following four rules (taken from the above Wikipedia article):</p>
@@ -1105,7 +1182,35 @@ class Solution {
     }
 }
 
-",
+","The Game of Life
+
+The Game of Life, also known as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970. The board is made up of an m x n grid of cells, where each cell has an initial state: live (represented by a 1) or dead (represented by a 0). Each cell interacts with its eight neighbors (horizontal, vertical, diagonal) using the following four rules:
+
+1. Any live cell with fewer than two live neighbors dies as if caused by under-population.
+2. Any live cell with two or three live neighbors lives on to the next generation.
+3. Any live cell with more than three live neighbors dies, as if by over-population.
+4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
+
+The next state of the board is determined by applying the above rules simultaneously to every cell in the current state of the m x n grid board. In this process, births and deaths occur simultaneously.
+
+Given the current state of the board, update the board to reflect its next state. Note that you do not need to return anything.
+
+Example 1:
+Input: board = [[0,1,0],[0,0,1],[1,1,1],[0,0,0]]
+Output: [[0,0,0],[1,0,1],[0,1,1],[0,1,0]]
+
+Example 2:
+Input: board = [[1,1],[1,0]]
+Output: [[1,1],[1,1]]
+
+Constraints:
+- m == board.length
+- n == board[i].length
+- 1 <= m, n <= 25
+- board[i][j] is 0 or 1.
+
+Follow-up:
+Could you solve it in-place? Remember that the board needs to be updated simultaneously: You cannot update some cells first and then use their updated values to update other cells. In this question, we represent the board using a 2D array. In principle, the board is infinite, which would cause problems when the active area encroaches upon the border of the array (i.e., live cells reach the border). How would you address these problems?"
 31-next-permutation,"<h2><a href=""https://leetcode.com/problems/next-permutation"">Next Permutation</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>A <strong>permutation</strong> of an array of integers is an arrangement of its members into a sequence or linear order.</p>
 
 <ul>
@@ -1193,7 +1298,25 @@ class Solution {
     }
 }
 
-",
+","A permutation of an array of integers is an arrangement of its members into a sequence or linear order. For example, for arr = [1,2,3], the following are all the permutations of arr: [1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1]. The next permutation of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array are sorted in one container according to their lexicographical order, then the next permutation of that array is the permutation that follows it in the sorted container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order). For example, the next permutation of arr = [1,2,3] is [1,3,2]. Similarly, the next permutation of arr = [2,3,1] is [3,1,2]. While the next permutation of arr = [3,2,1] is [1,2,3] because [3,2,1] does not have a lexicographical larger rearrangement.
+
+Given an array of integers nums, find the next permutation of nums. The replacement must be in place and use only constant extra memory.
+
+Example 1:
+Input: nums = [1,2,3]
+Output: [1,3,2]
+
+Example 2:
+Input: nums = [3,2,1]
+Output: [1,2,3]
+
+Example 3:
+Input: nums = [1,1,5]
+Output: [1,5,1]
+
+Constraints:
+1 < nums.length <= 100
+0 <= nums[i] <= 100"
 414-third-maximum-number,"<h2><a href=""https://leetcode.com/problems/third-maximum-number"">Third Maximum Number</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>Given an integer array <code>nums</code>, return <em>the <strong>third distinct maximum</strong> number in this array. If the third maximum does not exist, return the <strong>maximum</strong> number</em>.</p>
 
 <p>&nbsp;</p>
@@ -1271,7 +1394,30 @@ class Solution {
         
     }
 }
-",
+","Third Maximum Number
+
+Given an integer array nums, return the third distinct maximum number in this array. If the third maximum does not exist, return the maximum number.
+
+Example 1:
+Input: nums = [3,2,1]
+Output: 1
+Explanation: The first distinct maximum is 3. The second distinct maximum is 2. The third distinct maximum is 1.
+
+Example 2:
+Input: nums = [1,2]
+Output: 2
+Explanation: The first distinct maximum is 2. The second distinct maximum is 1. The third distinct maximum does not exist, so the maximum (2) is returned instead.
+
+Example 3:
+Input: nums = [2,2,3,1]
+Output: 1
+Explanation: The first distinct maximum is 3. The second distinct maximum is 2 (both 2's are counted together since they have the same value). The third distinct maximum is 1.
+
+Constraints:
+1 <= nums.length <= 10^4
+-2^31 <= nums[i] <= 2^31 - 1
+
+Follow up: Can you find an O(n) solution?"
 42-trapping-rain-water,"<h2><a href=""https://leetcode.com/problems/trapping-rain-water"">Trapping Rain Water</a></h2> <img src='https://img.shields.io/badge/Difficulty-Hard-red' alt='Difficulty: Hard' /><hr><p>Given <code>n</code> non-negative integers representing an elevation map where the width of each bar is <code>1</code>, compute how much water it can trap after raining.</p>
 
 <p>&nbsp;</p>
@@ -1329,7 +1475,23 @@ class Solution {
         
     }
 }
-",
+","Trapping Rain Water
+
+Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+
+Example 1:
+Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+Explanation: The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped.
+
+Example 2:
+Input: height = [4,2,0,3,2,5]
+Output: 9
+
+Constraints:
+- n == height.length
+- 1 <= n <= 2 * 10^4
+- 0 <= height[i] <= 10^5"
 53-maximum-subarray,"<h2><a href=""https://leetcode.com/problems/maximum-subarray"">Maximum Subarray</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>Given an integer array <code>nums</code>, find the <span data-keyword=""subarray-nonempty"">subarray</span> with the largest sum, and return <em>its sum</em>.</p>
 
 <p>&nbsp;</p>
@@ -1379,7 +1541,31 @@ class Solution {
         return maxSum;
     }
 }
-",
+","Maximum Subarray
+
+Given an integer array nums, find the subarray with the largest sum, and return its sum.
+
+Example 1:
+Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+
+Example 2:
+Input: nums = [1]
+Output: 1
+Explanation: The subarray [1] has the largest sum 1.
+
+Example 3:
+Input: nums = [5,4,-1,7,8]
+Output: 23
+Explanation: The subarray [5,4,-1,7,8] has the largest sum 23.
+
+Constraints:
+1 <= nums.length <= 10^5
+-10^4 <= nums[i] <= 10^4
+
+Follow up:
+If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle."
 628-maximum-product-of-three-numbers,"<h2><a href=""https://leetcode.com/problems/maximum-product-of-three-numbers"">Maximum Product of Three Numbers</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>Given an integer array <code>nums</code>, <em>find three numbers whose product is maximum and return the maximum product</em>.</p>
 
 <p>&nbsp;</p>
@@ -1412,7 +1598,25 @@ class Solution {
         
     }
 }
-",
+","Maximum Product of Three Numbers
+
+Given an integer array nums, find three numbers whose product is maximum and return the maximum product.
+
+Example 1:
+Input: nums = [1,2,3]
+Output: 6
+
+Example 2:
+Input: nums = [1,2,3,4]
+Output: 24
+
+Example 3:
+Input: nums = [-1,-2,-3]
+Output: -6
+
+Constraints:
+- 3 <= nums.length <= 104
+- -1000 <= nums[i] <= 1000"
 69-sqrtx,"<h2><a href=""https://leetcode.com/problems/sqrtx"">Sqrt(x)</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>Given a non-negative integer <code>x</code>, return <em>the square root of </em><code>x</code><em> rounded down to the nearest integer</em>. The returned integer should be <strong>non-negative</strong> as well.</p>
 
 <p>You <strong>must not use</strong> any built-in exponent function or operator.</p>
@@ -1461,7 +1665,20 @@ class Solution {
         
     }
 }
-",
+","Given a non-negative integer x, return the square root of x rounded down to the nearest integer. The returned integer should be non-negative as well. You must not use any built-in exponent function or operator. For example, do not use pow(x, 0.5) in c++ or x ** 0.5 in python.
+
+Example 1:
+Input: x = 4
+Output: 2
+Explanation: The square root of 4 is 2, so we return 2.
+
+Example 2:
+Input: x = 8
+Output: 2
+Explanation: The square root of 8 is 2.82842..., and since we round it down to the nearest integer, 2 is returned.
+
+Constraints:
+0 < x <= 2^31 - 1"
 88-merge-sorted-array,"<h2><a href=""https://leetcode.com/problems/merge-sorted-array"">Merge Sorted Array</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>You are given two integer arrays <code>nums1</code> and <code>nums2</code>, sorted in <strong>non-decreasing order</strong>, and two integers <code>m</code> and <code>n</code>, representing the number of elements in <code>nums1</code> and <code>nums2</code> respectively.</p>
 
 <p><strong>Merge</strong> <code>nums1</code> and <code>nums2</code> into a single array sorted in <strong>non-decreasing order</strong>.</p>
@@ -1524,4 +1741,30 @@ class Solution {
         
     }
 }
-",
+","Merge Sorted Array
+
+You are given two integer arrays nums1 and nums2, sorted in non-decreasing order, and two integers m and n, representing the number of elements in nums1 and nums2 respectively. Merge nums1 and nums2 into a single array sorted in non-decreasing order. The final sorted array should not be returned by the function, but instead be stored inside the array nums1. To accommodate this, nums1 has a length of m + n, where the first m elements denote the elements that should be merged, and the last n elements are set to 0 and should be ignored. nums2 has a length of n.
+
+Example 1:
+Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+Output: [1,2,2,3,5,6]
+Explanation: The arrays we are merging are [1,2,3] and [2,5,6]. The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.
+
+Example 2:
+Input: nums1 = [1], m = 1, nums2 = [], n = 0
+Output: [1]
+Explanation: The arrays we are merging are [1] and []. The result of the merge is [1].
+
+Example 3:
+Input: nums1 = [0], m = 0, nums2 = [1], n = 1
+Output: [1]
+Explanation: The arrays we are merging are [] and [1]. The result of the merge is [1]. Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
+
+Constraints:
+- nums1.length == m + n
+- nums2.length == n
+- 0 <= m, n <= 200
+- 1 <= m + n <= 200
+- -10^9 <= nums1[i], nums2[j] <= 10^9
+
+Follow up: Can you come up with an algorithm that runs in O(m + n) time?"
